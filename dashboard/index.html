@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customizable Dashboard</title>
+    <meta name="description" content="A customizable, draggable dashboard with widgets">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/widgets.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <!-- App Bar -->
+    <header class="app-bar" role="banner">
+        <div class="app-bar-content">
+            <h1 class="app-title">Dashboard</h1>
+            
+            <div class="app-bar-center">
+                <div class="search-container">
+                    <input 
+                        type="search" 
+                        id="widget-search" 
+                        class="search-input"
+                        placeholder="Search widgets..."
+                        aria-label="Search widgets"
+                    >
+                    <svg class="search-icon" aria-hidden="true">
+                        <use href="assets/icons.svg#search"></use>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="app-bar-actions">
+                <button 
+                    type="button" 
+                    id="theme-toggle" 
+                    class="icon-button"
+                    aria-label="Toggle theme"
+                    title="Toggle theme"
+                >
+                    <svg aria-hidden="true">
+                        <use href="assets/icons.svg#theme"></use>
+                    </svg>
+                </button>
+                
+                <button 
+                    type="button" 
+                    id="add-widget-btn" 
+                    class="primary-button"
+                    aria-label="Add widget"
+                >
+                    <svg aria-hidden="true">
+                        <use href="assets/icons.svg#plus"></use>
+                    </svg>
+                    Add Widget
+                </button>
+                
+                <button 
+                    type="button" 
+                    id="menu-btn" 
+                    class="icon-button"
+                    aria-label="Open menu"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                >
+                    <svg aria-hidden="true">
+                        <use href="assets/icons.svg#menu"></use>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+        <!-- Grid Container -->
+        <div 
+            id="grid-container" 
+            class="grid-container"
+            role="region"
+            aria-label="Dashboard widgets"
+        >
+            <!-- Widgets will be dynamically inserted here -->
+        </div>
+        
+        <!-- Drag Ghost -->
+        <div id="drag-ghost" class="drag-ghost" aria-hidden="true"></div>
+    </main>
+
+    <!-- Add Widget Modal -->
+    <dialog id="add-widget-modal" class="modal" aria-labelledby="add-widget-title">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 id="add-widget-title" class="modal-title">Add Widget</h2>
+                <button 
+                    type="button" 
+                    class="icon-button modal-close"
+                    aria-label="Close modal"
+                    data-action="close"
+                >
+                    <svg aria-hidden="true">
+                        <use href="assets/icons.svg#close"></use>
+                    </svg>
+                </button>
+            </header>
+            
+            <div class="modal-body">
+                <div id="widget-library" class="widget-library">
+                    <!-- Widget options will be dynamically populated -->
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Widget Settings Modal -->
+    <dialog id="widget-settings-modal" class="modal" aria-labelledby="widget-settings-title">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 id="widget-settings-title" class="modal-title">Widget Settings</h2>
+                <button 
+                    type="button" 
+                    class="icon-button modal-close"
+                    aria-label="Close modal"
+                    data-action="close"
+                >
+                    <svg aria-hidden="true">
+                        <use href="assets/icons.svg#close"></use>
+                    </svg>
+                </button>
+            </header>
+            
+            <div class="modal-body">
+                <form id="widget-settings-form">
+                    <!-- Settings will be dynamically populated -->
+                </form>
+            </div>
+            
+            <footer class="modal-footer">
+                <button type="button" class="secondary-button" data-action="close">Cancel</button>
+                <button type="submit" form="widget-settings-form" class="primary-button">Save</button>
+            </footer>
+        </div>
+    </dialog>
+
+    <!-- Context Menu -->
+    <div id="context-menu" class="context-menu" role="menu" aria-hidden="true">
+        <button type="button" class="context-menu-item" data-action="settings">
+            <svg aria-hidden="true">
+                <use href="assets/icons.svg#settings"></use>
+            </svg>
+            Settings
+        </button>
+        <button type="button" class="context-menu-item" data-action="duplicate">
+            <svg aria-hidden="true">
+                <use href="assets/icons.svg#copy"></use>
+            </svg>
+            Duplicate
+        </button>
+        <button type="button" class="context-menu-item" data-action="remove">
+            <svg aria-hidden="true">
+                <use href="assets/icons.svg#trash"></use>
+            </svg>
+            Remove
+        </button>
+    </div>
+
+    <!-- App Menu -->
+    <div id="app-menu" class="app-menu" role="menu" aria-hidden="true">
+        <button type="button" class="menu-item" data-action="export">
+            <svg aria-hidden="true">
+                <use href="assets/icons.svg#download"></use>
+            </svg>
+            Export Layout
+        </button>
+        <button type="button" class="menu-item" data-action="import">
+            <svg aria-hidden="true">
+                <use href="assets/icons.svg#upload"></use>
+            </svg>
+            Import Layout
+        </button>
+        <hr class="menu-separator">
+        <button type="button" class="menu-item" data-action="reset">
+            <svg aria-hidden="true">
+                <use href="assets/icons.svg#refresh"></use>
+            </svg>
+            Reset to Default
+        </button>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true">
+        <!-- Toasts will be dynamically inserted here -->
+    </div>
+
+    <!-- Hidden file input for import -->
+    <input type="file" id="import-input" accept=".json" style="display: none;" aria-hidden="true">
+
+    <!-- Scripts -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

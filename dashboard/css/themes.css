@@ -1,0 +1,250 @@
+/* Theme System */
+
+/* Light Theme (Default) */
+:root,
+[data-theme="light"] {
+    --bg: #ffffff;
+    --bg-secondary: #f8fafc;
+    --panel: #ffffff;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text-secondary: #475569;
+    --muted: #64748b;
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --secondary: #f1f5f9;
+    --accent: #8b5cf6;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --ring: #3b82f64d;
+    
+    /* Glass effect */
+    --glass-bg: rgba(255, 255, 255, var(--glass-opacity));
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --bg: #0f172a;
+    --bg-secondary: #1e293b;
+    --panel: #1e293b;
+    --card: #1e293b;
+    --border: #334155;
+    --text: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --muted: #94a3b8;
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --secondary: #334155;
+    --accent: #8b5cf6;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --ring: #3b82f64d;
+    
+    /* Glass effect */
+    --glass-bg: rgba(30, 41, 59, var(--glass-opacity));
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* AMOLED Theme (Pure Black) */
+[data-theme="amoled"] {
+    --bg: #000000;
+    --bg-secondary: #111111;
+    --panel: #111111;
+    --card: #111111;
+    --border: #333333;
+    --text: #ffffff;
+    --text-secondary: #cccccc;
+    --muted: #888888;
+    --primary: #0ea5e9;
+    --primary-hover: #0284c7;
+    --secondary: #333333;
+    --accent: #a855f7;
+    --success: #22c55e;
+    --warning: #eab308;
+    --danger: #f87171;
+    --ring: #0ea5e94d;
+    
+    /* Glass effect */
+    --glass-bg: rgba(17, 17, 17, var(--glass-opacity));
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* System Theme Detection */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+        --bg: #0f172a;
+        --bg-secondary: #1e293b;
+        --panel: #1e293b;
+        --card: #1e293b;
+        --border: #334155;
+        --text: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --muted: #94a3b8;
+        --primary: #3b82f6;
+        --primary-hover: #2563eb;
+        --secondary: #334155;
+        --accent: #8b5cf6;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --ring: #3b82f64d;
+        
+        /* Glass effect */
+        --glass-bg: rgba(30, 41, 59, var(--glass-opacity));
+        --glass-border: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Theme Transitions */
+* {
+    transition: background-color var(--duration-normal) var(--ease-in-out),
+                border-color var(--duration-normal) var(--ease-in-out),
+                color var(--duration-normal) var(--ease-in-out);
+}
+
+/* Glass Morphism Support */
+.glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(1px)) {
+    .glass {
+        background: var(--card);
+        border: 1px solid var(--border);
+    }
+}
+
+/* High Contrast Theme Adjustments */
+@media (prefers-contrast: high) {
+    :root,
+    [data-theme="light"] {
+        --bg: #ffffff;
+        --text: #000000;
+        --border: #000000;
+        --primary: #0000ff;
+        --success: #008000;
+        --warning: #ff8c00;
+        --danger: #ff0000;
+    }
+    
+    [data-theme="dark"],
+    [data-theme="amoled"] {
+        --bg: #000000;
+        --text: #ffffff;
+        --border: #ffffff;
+        --primary: #00bfff;
+        --success: #00ff00;
+        --warning: #ffff00;
+        --danger: #ff6b6b;
+    }
+    
+    .glass {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: var(--card);
+    }
+}
+
+/* Theme-specific Color Utilities */
+.bg-primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.bg-secondary {
+    background-color: var(--secondary);
+    color: var(--text);
+}
+
+.bg-success {
+    background-color: var(--success);
+    color: white;
+}
+
+.bg-warning {
+    background-color: var(--warning);
+    color: white;
+}
+
+.bg-danger {
+    background-color: var(--danger);
+    color: white;
+}
+
+/* Border Colors */
+.border-primary {
+    border-color: var(--primary);
+}
+
+.border-success {
+    border-color: var(--success);
+}
+
+.border-warning {
+    border-color: var(--warning);
+}
+
+.border-danger {
+    border-color: var(--danger);
+}
+
+/* Theme Toggle Animation */
+.theme-transition {
+    transition: all var(--duration-slow) var(--ease-in-out);
+}
+
+/* Dark mode image adjustments */
+[data-theme="dark"] img:not(.no-filter),
+[data-theme="amoled"] img:not(.no-filter) {
+    filter: brightness(0.9) contrast(1.1);
+}
+
+/* Scrollbar Theming */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--muted);
+    border-radius: var(--radius);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--muted) var(--bg-secondary);
+}
+
+/* Focus ring theming */
+:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+}
+
+/* Selection theming */
+::selection {
+    background-color: var(--primary);
+    color: var(--bg);
+}
+
+::-moz-selection {
+    background-color: var(--primary);
+    color: var(--bg);
+}
