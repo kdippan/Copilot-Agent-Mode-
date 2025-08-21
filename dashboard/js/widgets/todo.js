@@ -385,10 +385,12 @@ export function createWidget(initialConfig = {}) {
      * Emit configuration change event
      */
     function emitConfigChange() {
-        element.dispatchEvent(new CustomEvent('widget-config-changed', {
-            detail: { config },
-            bubbles: true
-        }));
+        if (element) {
+            element.dispatchEvent(new CustomEvent('widget-config-changed', {
+                detail: { config },
+                bubbles: true
+            }));
+        }
     }
 
     /**
